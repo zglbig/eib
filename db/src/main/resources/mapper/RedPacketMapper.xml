@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zgl.db.dao.mapper.RedPacketMapper">
+    <resultMap id="redMapper" type="org.zgl.db.dao.entity.RedPacket">
+        <id column="id" property="id"/>
+        <result column="uid" property="uid"/>
+        <result column="user_name" property="userName"/>
+        <result column="head_url" property="headUrl"/>
+        <result column="vip_lv" property="vipLv"/>
+        <result column="all_num" property="allNum"/>
+        <result column="all_gold" property="allGold"/>
+        <result column="draw_num" property="drawNum"/>
+        <result column="residue_gold" property="residueGold"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_time_str" property="createTimeStr"/>
+        <result column="extend" property="extend"/>
+    </resultMap>
+
+    <insert id="insertRedPacket" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into db_red_packet (
+            uid
+            ,user_name
+            ,head_url
+            ,vip_lv
+            ,all_num
+            ,all_gold
+            ,draw_num
+            ,residue_gold
+            ,create_time
+            ,create_time_str
+            ,extend
+        )
+        values (#{uid}
+            ,#{userName}
+            ,#{headUrl}
+            ,#{vipLv}
+            ,#{allNum}
+            ,#{allGold}
+            ,#{drawNum}
+            ,#{residueGold}
+            ,#{createTime}
+            ,#{createTimeStr}
+            ,#{extend}
+        )
+    </insert>
+    <select id="queryRedPacketUid" resultMap="redMapper">
+        select *
+        from db_red_packet where id=#{id}
+    </select>
+    <update id="updateRedPacket" parameterType="org.zgl.db.dao.entity.RedPacket">
+        update db_red_packet
+        <set>
+            <if test="uid != null">uid = #{uid},</if>
+            <if test="userName != null">user_name = #{userName},</if>
+            <if test="headUrl != null">head_url = #{headUrl},</if>
+            <if test="vipLv != null">vip_lv = #{vipLv},</if>
+            <if test="allNum != null">all_num = #{allNum},</if>
+            <if test="allGold != null">all_gold = #{allGold},</if>
+            <if test="drawNum != null">draw_num = #{drawNum}</if>
+            <if test="residueGold != null">residue_gold = #{residueGold}</if>
+            <if test="createTime != null">create_time = #{createTime}</if>
+            <if test="createTimeStr != null">create_time_str = #{createTimeStr}</if>
+            <if test="extend != null">extend = #{extend}</if>
+        </set>
+        where id=#{id}
+    </update>
+    <delete id="deleteRedPacket">
+        delete from db_red_packet
+        where uid = #{uid}
+    </delete>
+</mapper>

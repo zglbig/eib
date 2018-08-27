@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zgl.db.dao.mapper.WeathMapper">
+    <resultMap id="weatMap" type="org.zgl.db.dao.entity.Weath">
+        <id column="id" property="id"/>
+        <result column="uid" property="uid"/>
+        <result column="gold" property="gold"/>
+        <result column="diamond" property="diamond"/>
+        <result column="integral" property="integral"/>
+        <result column="vip_lv" property="vipLv"/>
+        <result column="vip_exp" property="vipExp"/>
+        <result column="use_auto_id" property="useAutoId"/>
+        <result column="charm_num" property="charmNum"/>
+        <result column="first_buy" property="firstBuy"/>
+        <result column="first_buy_time" property="firstBuyTime"/>
+        <result column="extend" property="extend"/>
+    </resultMap>
+
+    <insert id="insertWeath" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into db_weath (
+            uid
+            ,gold
+            ,diamond
+            ,integral
+            ,vip_lv
+            ,vip_exp
+            ,use_auto_id
+            ,charm_num
+            ,first_buy
+            ,first_buy_time
+            ,extend
+        )
+        values (
+            #{uid}
+            ,#{gold}
+            ,#{diamond}
+            ,#{integral}
+            ,#{vipLv}
+            ,#{vipExp}
+            ,#{useAutoId}
+            ,#{charmNum}
+            ,#{firstBuy}
+            ,#{firstBuyTime}
+            ,#{extend})
+    </insert>
+    <select id="queryWeath" resultMap="weatMap">
+        select *
+        from db_weath where id=#{id}
+    </select>
+    <select id="queryWeathList" resultMap="weatMap">
+        select *
+        from db_weath where id>=#{id};
+    </select>
+    <update id="updateWeath" parameterType="org.zgl.db.dao.entity.Weath">
+        update db_weath
+        <set>
+            <if test="uid != null">uid = #{uid},</if>
+            <if test="gold != null">gold = #{gold},</if>
+            <if test="diamond != null">diamond = #{diamond},</if>
+            <if test="integral != null">integral = #{integral},</if>
+            <if test="vipLv != null">vip_lv = #{vipLv},</if>
+            <if test="vipExp != null">vip_exp = #{vipExp},</if>
+            <if test="useAutoId != null">use_auto_id = #{useAutoId},</if>
+            <if test="firstBuy != null">first_buy = #{firstBuy},</if>
+            <if test="firstBuyTime != null">first_buy_time = #{firstBuyTime},</if>
+            <if test="extend != null">extend = #{extend}</if>
+        </set>
+        where id=#{id}
+    </update>
+    <delete id="deleteWeath">
+        delete from db_weath
+        where uid = #{uid}
+    </delete>
+</mapper>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zgl.db.dao.mapper.UserLogMapper">
+    <resultMap id="userLogMapper" type="org.zgl.db.dao.entity.UserLog">
+        <id column="id" property="id"/>
+        <result column="uid" property="uid"/>
+        <result column="user_name" property="userName"/>
+        <result column="operation_time" property="operationTime"/>
+        <result column="operation_time_str" property="operationTimeStr"/>
+        <result column="position" property="position"/>
+        <result column="card" property="card"/>
+        <result column="operation_desc" property="operationDesc"/>
+    </resultMap>
+
+    <insert id="insertUserLog" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into db_user_log (
+            uid
+            ,user_name
+            ,operation_time
+            ,operation_time_str
+            ,position
+            ,card
+            ,operation_desc
+        )
+        values (#{uid}
+            ,#{userName}
+            ,#{operationTime}
+            ,#{operationTimeStr}
+            ,#{position}
+            ,#{card}
+            ,#{operationDesc}
+        )
+    </insert>
+    <select id="queryUserLogUid" resultMap="userLogMapper">
+        select *
+        from db_user_log where uid=#{uid}
+    </select>
+    <update id="updateUserLog" parameterType="org.zgl.db.dao.entity.UserLog">
+        update db_user_log
+        <set>
+            <if test="uid != null">uid = #{uid},</if>
+            <if test="userName != null">user_name = #{userName},</if>
+            <if test="operationTime != null">operation_time = #{operationTime},</if>
+            <if test="operationTimeStr != null">operation_time_str = #{operationTimeStr},</if>
+            <if test="position != null">position = #{position},</if>
+            <if test="card != null">card = #{card},</if>
+            <if test="operationDesc != null">operation_desc = #{operationDesc}</if>
+        </set>
+        where id=#{id}
+    </update>
+    <delete id="deleteUserLog">
+        delete from db_user_log
+        where uid = #{uid}
+    </delete>
+</mapper>

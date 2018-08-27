@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zgl.db.dao.mapper.FriendsMapper">
+    <resultMap id="propMapper" type="org.zgl.db.dao.entity.Friends">
+        <id column="id" property="id"/>
+        <result column="uid" property="uid"/>
+        <result column="friend_uid" property="friendUid"/>
+        <result column="user_name" property="userName"/>
+        <result column="head_url" property="headUrl"/>
+        <result column="vip_lv" property="vipLv"/>
+        <result column="extend" property="extend"/>
+    </resultMap>
+
+    <insert id="insertFriends" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into db_prop (
+            uid
+            ,friend_uid
+            ,user_name
+            ,head_url
+            ,vip_lv
+            ,extend
+        )
+        values (#{uid}
+            ,#{friendUid}
+            ,#{userName}
+            ,#{headUrl}
+            ,#{vipLv}
+            ,#{extend}
+        )
+    </insert>
+    <select id="queryFriendsUid" resultMap="propMapper">
+        select *
+        from db_prop where id=#{id}
+    </select>
+    <update id="updateFriends" parameterType="org.zgl.db.dao.entity.Friends">
+        update db_prop
+        <set>
+            <if test="uid != null">uid = #{uid},</if>
+            <if test="friendUid != null">friend_uid = #{friendUid},</if>
+            <if test="userName != null">user_name = #{userName},</if>
+            <if test="headUrl != null">head_url = #{headUrl},</if>
+            <if test="vipLv != null">vip_lv = #{vipLv},</if>
+            <if test="extend != null">extend = #{extend}</if>
+        </set>
+        where id=#{id}
+    </update>
+    <delete id="deleteFriends">
+        delete from db_player
+        where uid = #{uid}
+    </delete>
+</mapper>

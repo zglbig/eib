@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zgl.db.dao.mapper.GiftBagMapper">
+    <resultMap id="giftBagMapper" type="org.zgl.db.dao.entity.GiftBag">
+        <result column="uid" property="uid"/>
+        <result column="day_count" property="dayCount"/>
+        <result column="last_login_time" property="lastLoginTime"/>
+        <result column="primary_count" property="primaryCount"/>
+        <result column="intermedite" property="intermedite"/>
+        <result column="advanced" property="advanced"/>
+        <result column="is_done" property="isDone"/>
+        <result column="is_award" property="isAward"/>
+        <result column="extend" property="extend"/>
+    </resultMap>
+
+    <insert id="insertGiftBag" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into db_prop (
+            uid
+            ,day_count
+            ,last_login_time
+            ,primary_count
+            ,intermedite
+            ,advanced
+            ,is_done
+            ,is_award
+            ,extend
+        )
+        values (#{uid}
+            ,#{dayCount}
+            ,#{lastLoginTime}
+            ,#{primaryCount}
+            ,#{intermedite}
+            ,#{advanced}
+            ,#{isDone}
+            ,#{isAward}
+            ,#{extend}
+        )
+    </insert>
+    <select id="queryGiftBagByUid" resultMap="giftBagMapper">
+        select *
+        from db_prop where uid=#{uid}
+    </select>
+    <update id="updateGiftBag" parameterType="org.zgl.db.dao.entity.GiftBag">
+        update db_prop
+        <set>
+            <if test="dayCount != null">day_count = #{dayCount},</if>
+            <if test="lastLoginTime != null">last_login_time = #{lastLoginTime},</if>
+            <if test="primaryCount != null">primary_count = #{primaryCount},</if>
+            <if test="intermedite != null">intermedite = #{intermedite},</if>
+            <if test="advanced != null">advanced = #{advanced},</if>
+            <if test="isDone != null">is_done = #{isDone},</if>
+            <if test="isAward != null">is_award = #{isAward},</if>
+            <if test="extend != null">extend = #{extend}</if>
+        </set>
+        where uid=#{uid}
+    </update>
+    <delete id="deleteGiftBag">
+        delete from db_player
+        where uid = #{uid}
+    </delete>
+</mapper>

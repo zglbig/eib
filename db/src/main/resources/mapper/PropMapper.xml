@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zgl.db.dao.mapper.PropMapper">
+    <resultMap id="propMapper" type="org.zgl.db.dao.entity.Prop">
+        <id column="id" property="id"/>
+        <result column="uid" property="uid"/>
+        <result column="exchange_card" property="exchangeCard"/>
+        <result column="kicking_card" property="kickingCard"/>
+        <result column="trumpet_card" property="trumpetCard"/>
+        <result column="flower" property="flower"/>
+        <result column="egg" property="egg"/>
+        <result column="bomb" property="bomb"/>
+        <result column="diamond_ring" property="diamondRing"/>
+        <result column="sports_car" property="sportsCar"/>
+        <result column="tower" property="tower"/>
+        <result column="streamer" property="streamer"/>
+        <result column="aircraft" property="aircraft"/>
+        <result column="blue_succubus" property="blueSuccubus"/>
+        <result column="telephone_charge10" property="telephoneCharge10"/>
+        <result column="telephone_charge50" property="telephoneCharge50"/>
+        <result column="telephone_charge100" property="telephoneCharge100"/>
+        <result column="iphone_x" property="iphoneX"/>
+        <result column="ipone7p" property="ipone7p"/>
+        <result column="mix2s" property="mix2s"/>
+        <result column="extend" property="extend"/>
+    </resultMap>
+
+    <insert id="insertProp" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into db_prop (uid
+            ,exchange_card
+            ,kicking_card
+            ,trumpet_card
+            ,flower
+            ,egg
+            ,bomb
+            ,diamond_ring
+            ,sports_car
+            ,tower
+            ,streamer
+            ,aircraft
+            ,blue_succubus
+            ,telephone_charge10
+            ,telephone_charge50
+            ,telephone_charge100
+            ,iphone_x
+            ,ipone7p
+            ,mix2s
+            ,extend
+        )
+        values (#{uid}
+            ,#{exchangeCard}
+            ,#{kickingCard}
+            ,#{trumpetCard}
+            ,#{flower}
+            ,#{egg}
+            ,#{bomb}
+            ,#{diamondRing}
+            ,#{sportsCar}
+            ,#{tower}
+            ,#{streamer}
+            ,#{aircraft}
+            ,#{blueSuccubus}
+            ,#{telephoneCharge10}
+            ,#{telephoneCharge50}
+            ,#{telephoneCharge100}
+            ,#{iphoneX}
+            ,#{ipone7p}
+            ,#{mix2s}
+            ,#{extend}
+        )
+    </insert>
+    <select id="queryPropId" resultMap="propMapper">
+        select *
+        from db_prop where id=#{id}
+    </select>
+    <update id="updateProp" parameterType="org.zgl.db.dao.entity.Prop">
+        update db_prop
+        <set>
+            <if test="uid != null">uid = #{uid},</if>
+            <if test="exchangeCard != null">exchange_card = #{exchangeCard},</if>
+            <if test="kickingCard != null">kicking_card = #{kickingCard},</if>
+            <if test="trumpetCard != null">trumpet_card = #{trumpetCard},</if>
+            <if test="flower != null">flower = #{flower},</if>
+            <if test="egg != null">egg = #{egg},</if>
+            <if test="bomb != null">bomb = #{bomb},</if>
+            <if test="diamondRing != null">diamond_ring = #{diamondRing},</if>
+            <if test="sportsCar != null">sports_car = #{sportsCar},</if>
+            <if test="tower != null">tower = #{tower},</if>
+            <if test="streamer != null">streamer = #{streamer},</if>
+            <if test="aircraft != null">aircraft = #{aircraft},</if>
+            <if test="blueSuccubus != null">blue_succubus = #{blueSuccubus},</if>
+            <if test="telephoneCharge10 != null">telephone_charge10 = #{telephoneCharge10},</if>
+            <if test="telephoneCharge50 != null">telephone_charge50 = #{telephoneCharge50},</if>
+            <if test="telephoneCharge100 != null">telephone_charge100 = #{telephoneCharge100},</if>
+            <if test="iphoneX != null">iphone_x = #{iphoneX},</if>
+            <if test="ipone7p != null">ipone7p = #{ipone7p},</if>
+            <if test="mix2s != null">mix2s = #{mix2s},</if>
+            <if test="extend != null">extend = #{extend}</if>
+        </set>
+        where id=#{id}
+    </update>
+    <delete id="deleteProp">
+        delete from db_player
+        where uid = #{uid}
+    </delete>
+</mapper>

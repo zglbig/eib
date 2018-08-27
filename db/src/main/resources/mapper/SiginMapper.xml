@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zgl.db.dao.mapper.SiginMapper">
+    <resultMap id="siginMapper" type="org.zgl.db.dao.entity.Sigin">
+        <id column="id" property="id"/>
+        <result column="uid" property="uid"/>
+        <result column="sigin_day" property="siginDay"/>
+        <result column="lastTime_sigin_time" property="lastTimeSiginTime"/>
+        <result column="dial_all_num" property="dialAllNum"/>
+        <result column="dial_use_num" property="dialUseNum"/>
+        <result column="extend" property="extend"/>
+    </resultMap>
+
+    <insert id="insertSigin" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into db_sigin (
+            uid
+            ,sigin_day
+            ,lastTime_sigin_time
+            ,dial_all_num
+            ,dial_use_num
+            ,extend
+        )
+        values (#{uid}
+            ,#{siginDay}
+            ,#{lastTimeSiginTime}
+            ,#{dialAllNum}
+            ,#{dialUseNum}
+            ,#{extend}
+        )
+    </insert>
+    <select id="querySiginUid" resultMap="siginMapper">
+        select *
+        from db_sigin where uid=#{uid}
+    </select>
+    <update id="updateSigin" parameterType="org.zgl.db.dao.entity.Sigin">
+        update db_sigin
+        <set>
+            <if test="uid != null">uid = #{uid},</if>
+            <if test="siginDay != null">sigin_day = #{siginDay},</if>
+            <if test="lastTimeSiginTime != null">lastTime_sigin_time = #{lastTimeSiginTime},</if>
+            <if test="dialAllNum != null">dial_all_num = #{dialAllNum},</if>
+            <if test="dialUseNum != null">dial_use_num = #{dialUseNum},</if>
+            <if test="extend != null">extend = #{extend}</if>
+        </set>
+        where id=#{id}
+    </update>
+    <delete id="deleteSigin">
+        delete from db_player
+        where uid = #{uid}
+    </delete>
+</mapper>

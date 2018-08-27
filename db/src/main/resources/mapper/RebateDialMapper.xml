@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zgl.db.dao.mapper.RedPacketMapper">
+    <resultMap id="rebateDialMapper" type="org.zgl.db.dao.entity.RebateDial">
+        <result column="uid" property="uid"/>
+        <result column="today" property="today"/>
+        <result column="top_up" property="topUp"/>
+        <result column="dice" property="dice"/>
+        <result column="to_room" property="toRoom"/>
+        <result column="lottery" property="lottery"/>
+        <result column="gold_award" property="goldAward"/>
+        <result column="top_up_award" property="topUpAward"/>
+    </resultMap>
+    <insert id="insertRebateDial" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into db_rebate_dial (
+            uid
+            ,today
+            ,top_up
+            ,dice
+            ,to_room
+            ,lottery
+            ,gold_award
+            ,top_up_award
+        )
+        values (#{uid}
+            ,#{today}
+            ,#{topUp}
+            ,#{dice}
+            ,#{toRoom}
+            ,#{lottery}
+            ,#{goldAward}
+            ,#{topUpAward}
+        )
+    </insert>
+    <select id="queryRebateDialUid" resultMap="rebateDialMapper">
+        select *
+        from db_rebate_dial where uid=#{uid}
+    </select>
+    <update id="updateRebateDial" parameterType="org.zgl.db.dao.entity.Bank">
+        update db_rebate_dial
+        <set>
+            <if test="today != null">today = #{today},</if>
+            <if test="topUp != null">top_up = #{topUp},</if>
+            <if test="dice != null">dice = #{dice},</if>
+            <if test="toRoom != null">to_room = #{toRoom},</if>
+            <if test="lottery != null">lottery = #{lottery},</if>
+            <if test="goldAward != null">gold_award = #{goldAward}</if>
+            <if test="topUpAward != null">top_up_award = #{topUpAward}</if>
+        </set>
+        where uid=#{uid}
+    </update>
+    <delete id="deleteRebateDialByUid">
+        delete from db_rebate_dial
+        where uid = #{uid}
+    </delete>
+</mapper>

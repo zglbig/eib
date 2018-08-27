@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zgl.db.dao.mapper.GeneralizeMapper">
+    <resultMap id="generalizeMapper" type="org.zgl.db.dao.entity.Generalize">
+        <result column="num" property="num"/>
+        <result column="self_uid" property="selfUid"/>
+        <result column="target_uid" property="targetUid"/>
+        <result column="award" property="award"/>
+        <result column="all_award" property="allAward"/>
+        <result column="target_user_name" property="targetUserName"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+    <insert id="insertGeneralize" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into db_beneralize (
+            num
+            ,self_uid
+            ,target_uid
+            ,award
+            ,all_award
+            ,target_user_name
+            ,create_time
+        )
+        values (#{num}
+            ,#{selfUid}
+            ,#{targetUid}
+            ,#{award}
+            ,#{allAward}
+            ,#{targetUserName}
+            ,#{createTime}
+        )
+    </insert>
+    <select id="queryGeneralizeByUid" resultMap="generalizeMapper">
+        select *
+        from db_beneralize where uid=#{uid}
+    </select>
+    <update id="updateGeneralizeByTargetUid" parameterType="org.zgl.db.dao.entity.Bank">
+        update db_beneralize
+        <set>
+            <if test="num != null">num = #{num}</if>
+            <if test="selfUid != null">self_uid = #{selfUid}</if>
+            <if test="targetUid != null">target_uid = #{targetUid}</if>
+            <if test="award != null">award = #{award}</if>
+            <if test="allAward != null">all_award = #{allAward}</if>
+            <if test="targetUserName != null">target_user_name = #{targetUserName}</if>
+            <if test="createTime != null">create_time = #{createTime}</if>
+        </set>
+        where uid=#{uid}
+    </update>
+    <delete id="deleteGeneralizeByUid">
+        delete from db_beneralize
+        where uid = #{uid}
+    </delete>
+</mapper>

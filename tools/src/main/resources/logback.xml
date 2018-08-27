@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+	<appender name="CONSOLE_FILE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %5p [%t] %replace(%caller{1}){'\t|Caller.{1}0|\r\n', ''} - %m%n
+			</pattern>
+		</encoder>
+	</appender>
+	<appender name="INFO_FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>logs/info/info.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>logs/info/info.%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>1024MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<!--只保存30天的日志-->
+			<maxHistory>1</maxHistory>
+		</rollingPolicy>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %5p [%t] %replace(%caller{1}){'\t|Caller.{1}0|\r\n', ''} - %m%n
+			</pattern>
+		</layout>
+		<!--过滤信息 只将info的日志信息输出到info日志中-->
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>INFO</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	</appender>
+	<appender name="WARN_FILE"
+			  class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>logs/warn/warn.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>logs/warn/warn.%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+					class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>1024MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<!--只保存30天的日志-->
+			<maxHistory>1</maxHistory>
+		</rollingPolicy>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %5p [%t] %replace(%caller{1}){'\t|Caller.{1}0|\r\n', ''} - %m%n
+			</pattern>
+		</layout>
+		<!--过滤信息 只将warn的日志信息输出到warn日志中-->
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>WARN</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	</appender>
+	<appender name="ERROR_FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>logs/error/error.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>logs/error/error.%d{yyyy-MM-dd}.%i.log.zip</FileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>1024MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %5p [%t] %replace(%caller{1}){'\t|Caller.{1}0|\r\n', ''} - %m%n
+			</pattern>
+		</layout>
+		<!--过滤信息 只将info的日志信息输出到info日志中-->
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	</appender>
+	<logger name="org.zgl" level="DEBUG" additivity="true">
+		<appender-ref ref="ERROR_FILE" />
+		<appender-ref ref="INFO_FILE" />
+	</logger>
+	<root level="INFO">
+		<appender-ref ref="CONSOLE_FILE" />
+	</root>
+</configuration>

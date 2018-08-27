@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zgl.db.dao.mapper.PlayerMapper">
+    <resultMap id="playerMap" type="org.zgl.db.dao.entity.Player">
+        <id column="id" property="id"/>
+        <result column="uid" property="uid"/>
+        <result column="account" property="account"/>
+        <result column="password" property="password"/>
+        <result column="user_name" property="userName"/>
+        <result column="head_img_url" property="headImgUrl"/>
+        <result column="generalize_uid" property="generalizeUid"/>
+        <result column="extend" property="extend"/>
+        <result column="create_time" property="createTime"/>
+        <result column="last_edit_time" property="lastEditTime"/>
+        <result column="signature" property="signature"/>
+        <result column="contact_way" property="contactWay"/>
+        <result column="addr" property="addr"/>
+        <association property="weath" column="weath_id" javaType="org.zgl.db.dao.entity.Weath">
+            <id column="weath_id" property="id"/>
+            <result column="uid" property="uid"/>
+            <result column="gold" property="gold"/>
+            <result column="diamond" property="diamond"/>
+            <result column="integral" property="integral"/>
+            <result column="vip_lv" property="vipLv"/>
+            <result column="vip_exp" property="vipExp"/>
+            <result column="use_auto_id" property="useAutoId"/>
+            <result column="charm_num" property="charmNum"/>
+            <result column="first_buy" property="firstBuy"/>
+            <result column="first_buy_time" property="firstBuyTime"/>
+            <result column="extend" property="extend"/>
+        </association>
+        <association property="sigin" column="sigin_id" javaType="org.zgl.db.dao.entity.Sigin">
+            <id column="sigin_id" property="id"/>
+            <result column="uid" property="uid"/>
+            <result column="extend" property="extend"/>
+        </association>
+
+        <association property="prop" column="prop_id" javaType="org.zgl.db.dao.entity.Prop">
+            <id column="prop_id" property="id"/>
+            <result column="uid" property="uid"/>
+            <result column="extend" property="extend"/>
+        </association>
+        <!--这里还有一个外键复合类-->
+    </resultMap>
+    <select id="queryDBUserById" resultMap="playerMap" parameterType="Integer">
+        select *
+        --          p.id,
+        --         p.uid,
+        --         p.account,
+        --         p.password,
+        --         p.user_name,
+        --         p.head_img_url,
+        --         p.generalize_uid,
+        --         p.extend,
+        --         w.id,
+        --         p.create_time,
+        --         p.last_edit_time
+        from db_player p, db_weath w
+        where w.id = p.weath_id and p.id = #{id}
+    </select>
+    <update id="updateDBUser" parameterType="org.zgl.db.dao.entity.Player">
+        update db_player
+        <set>
+            <if test="uid != null">uid = #{uid},</if>
+            <if test="account != null">account = #{account},</if>
+            <if test="password != null">password = #{password},</if>
+            <if test="userName != null">user_name = #{userName},</if>
+            <if test="headImgUrl != null">head_img_url = #{headImgUrl},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="generalizeUid != null">generalize_uid = #{generalizeUid},</if>
+            <if test="lastEditTime != null">last_edit_time = #{lastEditTime},</if>
+            <if test="addr != null">addr = #{addr},</if>
+            <if test="signature != null">signature = #{signature},</if>
+            <if test="contactWay != null">contact_way = #{contactWay},</if>
+            <if test="extend != null">extend = #{extend}</if>
+        </set>
+        where id=#{id}
+    </update>
+    <insert id="insertDBUser" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into db_player (
+            account
+            , password
+            , user_name
+            , head_img_url
+            , generalize_uid
+            , extend
+            , weath_id
+            ,prop_id
+            ,sigin_id
+            , create_time
+            ,addr
+            ,signature
+            ,contact_way
+            , last_edit_time)
+        values (
+            #{account}
+            , #{password}
+            , #{userName}
+            , #{headImgUrl}
+            , #{generalizeUid}
+            , #{extend}
+            , #{weath.id}
+            , #{prop.id}
+            , #{sigin.id}
+            , #{createTime}
+            ,#{addr}
+            ,#{signature}
+            ,#{contactWay}
+            , #{lastEditTime});
+    </insert>
+    <select id="queryDBUserByAccount" resultMap="playerMap">
+        select *
+        from db_player p
+            , db_weath w
+        where account = #{account} and w.id = p.weath_id
+    </select>
+
+    <select id="queryDBUserByUid" resultMap="playerMap">
+        select *
+        from db_player p
+            , db_weath w
+        where p.uid = #{uid} and w.id = p.weath_id
+    </select>
+    <select id="queryDBUserList" resultMap="playerMap">
+        select *
+        from db_player p
+            , db_weath w
+        where p.id > #{id} and w.id = p.weath_id
+    </select>
+    <delete id="deleteDBUser">
+        delete from db_player
+        where uid = #{uid}
+    </delete>
+</mapper>

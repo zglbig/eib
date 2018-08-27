@@ -1,0 +1,12 @@
+
+tcp-config:
+  port: 8085
+  max-work-threed-pool: 4
+  max-boss-threed-pool: 1
+  reader-idle-time: 60
+  writer-idle-time: 60
+  all-idle-time: 60
+server:
+  port: 8095
+
+
